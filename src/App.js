@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { TodoInput } from "./todo/components/TodoInput/TodoInput";
+import { TodoTitle } from "./todo/components/TodoTitle/TodoTitle";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {todos: []}
+}
+
+createTodoObject = (text) => {
+const todo = {
+  done:false,
+  id: new Date().toLocaleString(),
+}
+this.setState({
+todo: [{ ...todo, text}, ...this.state.todos]
+});
+}
+
+  render() {
+    return (
+      <div className="App container">
+        <TodoTitle />
+        <TodoInput />
+      </div>
+    );
+  }
 }
 
 export default App;
