@@ -3,7 +3,7 @@ import React from "react";
 export class TodoInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: "" };
   }
 
   handleChange = (event) => {
@@ -11,26 +11,33 @@ export class TodoInput extends React.Component {
   };
 
   handleSubmit = (event) => {
-    
-    if (event.target.value === '') {
+    if (event.target.value === "") {
       return;
     }
 
     if (event.key === "Enter") {
       event.preventDefault();
       this.props.create(this.state.value);
-      event.target.value = '';
+      event.target.value = "";
     }
-  }
+  };
 
   render() {
     return (
-      <input
-      onKeyPress={this.handleSubmit}
-        onChange={this.handleChange}
-        type= 'text'
-        className='form-control'
-      />
+      <div className="d-flex">
+        <button
+          onClick={this.props.completeAll}
+          type="button"
+          class="btn btn-primary">
+          Allinverse
+        </button>
+        <input
+          onKeyPress={this.handleSubmit}
+          onChange={this.handleChange}
+          type="text"
+          className="form-control"
+        />
+      </div>
     );
   }
 }
