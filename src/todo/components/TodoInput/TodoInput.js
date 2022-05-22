@@ -28,7 +28,7 @@ export class TodoInput extends React.Component {
         <button
           onClick={this.props.completeAll}
           type="button"
-          class="btn btn-primary">
+          className="btn btn-primary">
           Allinverse
         </button>
         <input

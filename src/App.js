@@ -1,5 +1,7 @@
+/* eslint-disable default-case */
 import React from "react";
 import "./App.css";
+import { Footer } from "./todo/components/Footer/footer";
 import { TodoInput } from "./todo/components/TodoInput/TodoInput";
 import { TodoList } from "./todo/components/TodoList/TodoList";
 import { TodoTitle } from "./todo/components/TodoTitle/TodoTitle";
@@ -7,7 +9,9 @@ import { TodoTitle } from "./todo/components/TodoTitle/TodoTitle";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { todos: [] };
+    this.state = { 
+      todos: [],
+    filter: 'all' };
   }
 
   createTodoObject = (text) => {
@@ -63,6 +67,38 @@ class App extends React.Component {
     });
   }
 
+  deleteCompletedTodos = () =>{
+    const completed = this.state.todos.filter(item => !item.done);
+    this.setState({
+      todos: completed,
+    }) 
+  }
+
+  notCompletedTodosLength = () => {
+    const notCompleted = this.state.todos.filter(item => item.done === false)
+    return notCompleted.length;
+  }
+  completedTodosLength = () => {
+    const completed = this.state.todos.filter(item => item.done)
+    return completed.length;
+  }
+
+  setFilter = (filter) => {
+    this.setState({filter});
+  }
+
+  getFilterPredicate = item => {
+    switch (this.state.filter) {
+      case 'completed':
+        return item.done;
+      case 'all':
+        return true;
+      case 'active':
+        return !item.done;
+      
+    }
+  }
+
   render() {
     return (
       <div className="App container">
@@ -73,8 +109,15 @@ class App extends React.Component {
         />
         <TodoList
           complete={this.completeTodo}
-          todos={this.state.todos}
+          todos={this.state.todos.filter(this.getFilterPredicate)}
           delete={this.deleteTodo}
+        />
+        <Footer 
+        todos={this.state.todos.length}
+        notCompletedLength={this.notCompletedTodosLength}
+        completedLength={this.completedTodosLength}
+        deleteCompleted={this.deleteCompletedTodos}
+        filter = {this.setFilter}
         />
       </div>
     );
